@@ -7,7 +7,7 @@ numbers = ['0','1','2','3','4','5','6','7','8','9']
 firstLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 otherLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789"
 
-keywords = ["and", "class", "else", "false", "fun", "for", "if", "nil", "or", "print", "return", "super", "this", "true", "var", "while", "env"]
+keywords = ["and", "class", "else", "false", "fun", "for", "if", "nil", "or", "return", "super", "this", "true", "var", "while", "env"]
 
 tokenType = {
 	#ONE CHARACTER
@@ -46,7 +46,6 @@ tokenType = {
 	"IF":28,
 	"NIL":29,
 	"OR":30,
-	"PRINT":31,
 	"RETURN":32,
 	"SUPER":33,
 	"THIS":34,

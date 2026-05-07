@@ -82,13 +82,6 @@ class IfNode(AstNode):
 		elif self.elsenode != None:
 			self.elsenode.interpret()			
 
-class PrintNode(AstNode):
-	def __init__(self, expr):
-		self.expr = expr
-	def interpret(self):
-		self.expr.evaluate()
-		print(self.expr.value, end='')	
-
 class ExpressionNode(AstNode):
 	def __init__(self, expr):
 		self.expr = expr

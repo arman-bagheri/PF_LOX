@@ -18,9 +18,6 @@ def sync():
 	elif matchToken("FUN"):
 		return
 
-	elif matchToken("PRINT"):
-		return	
-
 	elif matchToken("VAR"):
 		return
 
@@ -58,9 +55,7 @@ def program():
 		
 
 def statement():
-	if matchToken("PRINT"):
-		return printStmt()
-	elif matchToken("VAR"):
+	if matchToken("VAR"):
 		return varStmt()
 	elif matchToken("LEFT_BRACE"):
 		return blockStmt()
@@ -206,13 +201,6 @@ def expressionStmt():
 	consume("SEMICOLON", "Missing semicolon at the end of a statement.")
 	return ExpressionNode(expr)
 
-
-def printStmt():
-	advance()
-	expr = expression()
-	consume("SEMICOLON", "Missing semicolon at the end of a statemtn.")
-	return PrintNode(expr)
-		
 
 #Expression Grammar
 
