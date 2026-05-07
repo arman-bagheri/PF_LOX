@@ -1,0 +1,13 @@
+fun adder(n){
+	//env
+	fun function(x){
+		return n + x;
+	}
+	return function;
+}
+
+var adder5 = adder(5);
+var adder3 = adder(3);
+
+println(adder5(5));
+println(adder3(6));
