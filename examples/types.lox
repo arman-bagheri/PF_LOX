@@ -1,0 +1,18 @@
+var t = true;
+var f = false;
+var d = -1.559;
+var s = "hello world!";
+var n = nil;
+
+fun myfunction(n){
+	return n;
+}
+
+var func = myfunction;
+
+println(t);
+println(f);
+println(d);
+println(s);
+println(n);
+println(func);

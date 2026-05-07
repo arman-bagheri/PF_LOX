@@ -299,8 +299,15 @@ class Println(BuiltinFunction):
 		self.closure = getEnv()
 		self.parameters = [token("IDENTIFIER", "x", None, None)]
 	def interpret(self):
-		print(getValue("x"))
-		raise Return(None)
+		val = getValue("x")
+		if val==None:
+			print("nil")
+		elif type(val) == FunctionValue:
+			print("<Function type>")
+		else:
+			print(val)
+		raise Return(None)	
+
 
 
 defVariable("println", Println())

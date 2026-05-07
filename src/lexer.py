@@ -7,7 +7,7 @@ numbers = ['0','1','2','3','4','5','6','7','8','9']
 firstLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 otherLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789"
 
-keywords = ["and", "class", "else", "false", "fun", "for", "if", "nil", "or", "return", "super", "this", "true", "var", "while", "env"]
+keywords = ["and", "else", "false", "fun", "for", "if", "nil", "or", "return", "true", "var", "while", "env"]
 
 tokenType = {
 	#ONE CHARACTER
@@ -16,7 +16,6 @@ tokenType = {
 	"LEFT_BRACE": 2,
 	"RIGHT_BRACE": 3,
 	"COMMA": 4,
-	"DOT": 5,
 	"MINUS": 6,
 	"PLUS": 7,
 	"SEMICOLON": 8,
@@ -38,7 +37,6 @@ tokenType = {
 	
 	#KEYWORDS
 	"AND":22,
-	"CLASS":23,
 	"ELSE":24,
 	"FALSE":25,
 	"FUN":26,
@@ -47,8 +45,6 @@ tokenType = {
 	"NIL":29,
 	"OR":30,
 	"RETURN":32,
-	"SUPER":33,
-	"THIS":34,
 	"TRUE":35,
 	"VAR":36,
 	"WHILE":37,

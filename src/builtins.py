@@ -9,4 +9,10 @@ class Println(BuiltinFunction):
 		self.parentenv = curEnv
 		self.parameters = [token("IDENTIFIER", "x", None, None)]
 	def interpret(self):
-		print(getValue("x"))
+		val = getValue("x")
+		if val==None:
+			print("nil")
+		elif type(val) == FunctionValue:
+			print("Function type.")
+		else:
+			print(value)
