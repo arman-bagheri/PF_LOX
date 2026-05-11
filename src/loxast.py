@@ -11,6 +11,8 @@ stmtList = []
 #		strings				-> strings
 #		true and false		-> True and False
 #		nil					->    None
+#		functions 			-> FunctionValue
+#		array				-> list
 #	only nil and false ara falsy rest are truthy
 
 
@@ -286,10 +288,35 @@ class FunctionValue(Expression):
 		self.stmts = stmts
 		self.parameters = parameters
 		self.argcount = len(parameters)
+	def __str__(self):
+		return "<Function Type>"
+
 	def evaluate(self):
 		self.closure = getEnv()
 		self.value = self
 
+
+class ArrayValue(Expressison):
+	def __init__(self, exprs):
+		self.exprs = exprs
+	def __str__(self):
+		string = "["
+		for v in self.values:
+			if(type(v)==FunctionValue):
+				string += ", " + v.__str__()
+			elif(type(v)==ArrayValue):
+				string += ", " + v.__str__()
+			elif(v==None):
+				string += ", nil"
+			else:
+				string += str(v)
+		return string	
+	def evaluate(self):
+		self.values = []
+		for expr in self.exprs:
+			expr.evaluate()
+			self.values.append(expr.value)
+		self.value = self		
 
 
 ## builtin functions
@@ -306,8 +333,6 @@ class Println(BuiltinFunction):
 		val = getValue("x")
 		if val==None:
 			print("nil")
-		elif type(val) == FunctionValue:
-			print("<Function type>")
 		else:
 			print(val)
 		raise Return(None)	
