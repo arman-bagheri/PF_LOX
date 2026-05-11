@@ -41,12 +41,6 @@ class ReturnNode(AstNode):
 		raise Return(self.expr.value)
 
 
-class FunctionValue():
-	def __init__(self, parameters, stmts, closure):
-		self.stmts = stmts
-		self.parameters = parameters
-		self.closure = closure
-		self.argcount = len(parameters)
 
 class FunctionNode(AstNode):
 	def __init__(self, idToken, parameters, stmts):
@@ -56,7 +50,8 @@ class FunctionNode(AstNode):
 		self.argcount = len(self.parameters)
 
 	def interpret(self):
-		function = FunctionValue(self.parameters, self.stmts, getEnv())
+		function = FunctionValue(self.parameters, self.stmts)
+		function.evaluate()
 		getEnv()[self.id.text] = function
 		#printEnv()
 
@@ -285,6 +280,15 @@ class Grouping(Expression):
 		self.value = self.expr.value
 
 
+
+class FunctionValue(Expression):
+	def __init__(self, parameters, stmts):
+		self.stmts = stmts
+		self.parameters = parameters
+		self.argcount = len(parameters)
+	def evaluate(self):
+		self.closure = getEnv()
+		self.value = self
 
 
 

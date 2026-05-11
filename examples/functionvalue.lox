@@ -1,0 +1,9 @@
+
+
+var f1 = fun(x){println(x);};
+
+f1(3);
+f1(8);
+
+println(f1);
+println(f1(9));

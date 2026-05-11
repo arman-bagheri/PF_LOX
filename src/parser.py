@@ -12,9 +12,6 @@ def sync():
 		advance()
 		return
 	
-	elif matchToken("CLASS"):
-		return
-	
 	elif matchToken("FUN"):
 		return
 
@@ -316,6 +313,25 @@ def primary():
 		expr = expression()
 		consume("RIGHT_PAREN", "Missing right parenthesis at expression.")
 		return Grouping(expr)
+	elif matchToken("FUN"):
+		advance()
+		stmts = []
+		parameters = []
+		consume("LEFT_PAREN", "Missing left parenthesis in expression")
+		if matchToken("IDENTIFIER"):
+			advance()
+			parameters.append(tokenList[current-1])
+			while matchToken("COMMA"):
+				advance()
+				consume("IDENTIFIER", "Missing identifier after comma in parameters")
+				parameters.append(tokenList[current-1])
+		
+		consume("RIGHT_PAREN", "Missing right parenthesis in function expression")
+		consume("LEFT_BRACE", "Missing left brace after function declaration expression")
+		while not matchToken("RIGHT_BRACE"):
+			stmts.append(statement())
+		consume("RIGHT_BRACE", "Missing right brace after function declaratio expression")
+		return FunctionValue(parameters, stmts)
 	else:
 		getMessage("Malformed Expression", tokenList[current].line)
 		raise SyntaxException		
