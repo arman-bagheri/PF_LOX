@@ -21,6 +21,8 @@ tokenType = {
 	"SEMICOLON": 8,
 	"SLASH": 9,
 	"STAR": 10,
+	"LEFT_BRACKET": 40,
+	"RIGHT_BRACKET": 41,
 	#ONE OR TWO CHARACTER
 	"BANG": 11,
 	"BANG_EQUAL": 12,
@@ -104,7 +106,15 @@ def lex(script):
 		elif script[index] == '}':
 			tokenList.append(token("RIGHT_BRACE", script[index], None, line))	
 			index += 1	
+			
+		elif script[index] == '[':
+			tokenList.append(token("LEFT_BRACKET", script[index], None, line))
+			index += 1
 		
+		elif script[index] == ']':
+			tokenList.append(token("RIGHT_BRACKET", script[index], None, line))	
+			index += 1		
+
 		elif script[index] == ',':
 			tokenList.append(token("COMMA", script[index], None, line))
 			index += 1

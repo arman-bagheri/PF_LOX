@@ -277,25 +277,34 @@ def unary():
 		child = unary()
 		return Unary(operator, child)
 	else:
-		return funCall()
+		return postFix()
 
-def funCall():
+def postFix():
 
 	token = tokenList[current]		#helper token for locating the function call
 	kallable = primary()
 	arglist = []
-	while matchToken("LEFT_PAREN"):
-		consume("LEFT_PAREN", "Missing left parenthesis.")
-		arglist.clear()
-		if not matchToken("RIGHT_PAREN"):
-			arg = expression()
-			arglist.append(arg)
-			while matchToken("COMMA"):
-				advance()
+
+	while True:
+		if matchToken("LEFT_BRACKET"):
+			advance()
+			indexexpr = expression()
+			consume("RIGHT_BRACKET", "Missing right bracket at the end of index expression")
+			kallable = Indexing(kallable, indexexpr, token)
+		elif matchToken("LEFT_PAREN"):
+			advance()
+			arglist.clear()
+			if not matchToken("RIGHT_PAREN"):
 				arg = expression()
 				arglist.append(arg)
-		consume("RIGHT_PAREN", "Missing right parenthesis after function parameters")
-		kallable = Call(kallable, arglist, token)
+				while matchToken("COMMA"):
+					advance()
+					arg = expression()
+					arglist.append(arg)
+			consume("RIGHT_PAREN", "Missing right parenthesis after function parameters")
+			kallable = Call(kallable, arglist, token)
+		else:
+			break	
 	return kallable
 
 
@@ -332,6 +341,20 @@ def primary():
 			stmts.append(statement())
 		consume("RIGHT_BRACE", "Missing right brace after function declaratio expression")
 		return FunctionValue(parameters, stmts)
+	elif matchToken("LEFT_BRACKET"):
+		advance()
+		if matchToken("RIGHT_BRACKET"):
+			advance()
+			return ArrayValue([])
+		expr = expression()
+		exprs = []
+		exprs.append(expr)
+		while not matchToken("RIGHT_BRACKET"):
+			consume("COMMA", "Missing comma after expression in array")
+			expr = expression()
+			exprs.append(expr)
+		advance()
+		return ArrayValue(exprs)			
 	else:
 		getMessage("Malformed Expression", tokenList[current].line)
 		raise SyntaxException		

@@ -282,6 +282,23 @@ class Grouping(Expression):
 		self.value = self.expr.value
 
 
+class Indexing(Expression):
+	def __init__(self, arrayexpr, indexexpr, token):
+		self.arrayexpr = arrayexpr
+		self.indexexpr = indexexpr
+		self.token  = token
+	def evaluate(self):
+		self.arrayexpr.evaluate()
+		self.indexexpr.evaluate()
+		if not isinstance(self.arrayexpr.value, ArrayValue):
+			print("Type error at " + str(self.token.line))
+			raise RuntimeException
+		try:	
+			self.value = self.arrayexpr.value.values[int(self.indexexpr.value)]	
+		except ValueError:
+			print("Type error at " + str(self.token.line))
+			raise RuntimeException			
+
 
 class FunctionValue(Expression):
 	def __init__(self, parameters, stmts):
@@ -296,7 +313,7 @@ class FunctionValue(Expression):
 		self.value = self
 
 
-class ArrayValue(Expressison):
+class ArrayValue(Expression):
 	def __init__(self, exprs):
 		self.exprs = exprs
 	def __str__(self):
@@ -309,7 +326,8 @@ class ArrayValue(Expressison):
 			elif(v==None):
 				string += ", nil"
 			else:
-				string += str(v)
+				string += ", " + str(v)
+		string += " ]"		
 		return string	
 	def evaluate(self):
 		self.values = []
@@ -322,6 +340,8 @@ class ArrayValue(Expressison):
 ## builtin functions
 
 class BuiltinFunction:
+	def __str__(self):
+		return "<Builtin Function Value>"
 	pass
 
 class Println(BuiltinFunction):
@@ -337,9 +357,21 @@ class Println(BuiltinFunction):
 			print(val)
 		raise Return(None)	
 
+class AppendArray(BuiltinFunction):
+	def __init__(self):
+		self.argcount = 2
+		self.closure = getEnv()
+		self.parameters = [token("IDENTIFIER", "array", None, None), token("IDENTIFIER", "value", None, None)]
+	def interpret(self):
+		array = getValue("array")
+		value = getValue("value")
+		
+		array.values.append(value)
+		raise Return(None)	
 
 
 defVariable("println", Println())
+defVariable("append", AppendArray())
 
 
 ###

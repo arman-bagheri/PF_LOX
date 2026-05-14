@@ -1,0 +1,17 @@
+
+var x = [1, 2, 3, 6, 5, nil, "hello", fun(x){return x;}, 77, [true, false], 55];
+println(x);
+
+for(var i = 0; i<11; i=i+1){
+	println(x[i]);
+}
+
+println(println);
+
+var fu = println;
+println(fu);
+
+append(x, 65);
+println(x[9][1]);
+println(x);
+println(x[7](44));
