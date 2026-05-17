@@ -369,9 +369,19 @@ class AppendArray(BuiltinFunction):
 		array.values.append(value)
 		raise Return(None)	
 
+class LenArray(BuiltinFunction):
+	def __init__(self):
+		self.argcount = 1
+		self.closure = getEnv()
+		self.parameters = [token("IDENTIFIER", "array", None, None)]
+	def interpret(self):
+		array = getValue("array")
+		raise Return(len(array.values))
+
 
 defVariable("println", Println())
 defVariable("append", AppendArray())
+defVariable("len", LenArray())
 
 
 ###

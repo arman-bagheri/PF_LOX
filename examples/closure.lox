@@ -1,0 +1,19 @@
+
+fun funny(){
+	var x = 5;
+	fun myfun(){
+		x = x + 1;
+		println(x);
+	}
+	return myfun;
+}
+
+
+var f1 = funny();
+var f2 = funny();
+
+f1();
+f1();
+f2();
+f1();
+f2();
