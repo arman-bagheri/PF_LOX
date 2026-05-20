@@ -6,7 +6,6 @@ In this file I will specify the syntactical structure of the grammar of the lox 
 IDENTIFIER ::= LETTER ( LETTER | DIGIT )* ;
 NUMBER ::= DIGIT+ ( "." DIGIT+ )? ;
 STRING ::= "\"" ( ANY_CHAR - "\"" )* "\"" ;
-NIL ::= "nil" ;
 
 DIGIT ::= "0"..."9" ;
 LETTER ::= "a"..."z" | "A"..."Z" | "_";
@@ -46,3 +45,11 @@ logic_or ::= logic_and ( "or" logic_and )* ;
 logic_and ::= equality ( "and" equality)* ;
 equality ::= comparison ( ("==" | "!=" ) comparison)* ;
 comparison ::= term ( ("<" | ">" | "<=" | ">=") term )* ;
+term ::= factor ( ( "+" | "-" ) factor)* ;
+factor ::= unary ( ( "*" | "/" ) unary)* ;
+unary ::= ( "!" | "-" ) unary | post ;
+post ::= primary ( "[" expression "]" | "(" expresson ("," expression)* ")" )* ; 
+primary ::= "true" | "false" | "nil" | NUMBER | STRING | IDENTIFIER | FUNCTION | ARRAY;
+
+ARRAY ::= "[" ( expression ( "," expression )* )? "]" ;
+FUNCTION ::= "fun" "(" parameters ")" "{" statement* "}";
