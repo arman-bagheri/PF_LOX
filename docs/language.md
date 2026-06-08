@@ -48,3 +48,9 @@ fun apply(f, x){
 
 During function calls, arguments are evaluated before the function is executed. 
 
+
+## Truthiness
+
+Lox has simple truthiness rules, only false and nil are falsy, other values are truthy.
+
+
