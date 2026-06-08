@@ -1,4 +1,4 @@
-## PF_LOX
+## PF_LOX - Arman Bagheri
 
 PF_LOX is a tree walk interpreter for a functional variant
 of the lox programming language written in python. The design and specifications of
